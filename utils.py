@@ -10,12 +10,11 @@ def load_img_vector_pairs(_dir):
     imgs = []
     for file in glob.glob('*'):
         if file.endswith('.txt'):
-            labels.append(np.loadtxt(f'{_dir}/{file}'))
+            labels.extend(np.loadtxt(f'{_dir}/{file}'))
         elif file.endswith('.npy'):
-            imgs.append(np.load(open(f'{_dir}/{file}' , 'rb')))
+            imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
 
-    print(imgs.shape)
-    return np.stack(imgs), np.stack(labels)
+    return np.array(imgs), np.array(labels)
 
 
 
