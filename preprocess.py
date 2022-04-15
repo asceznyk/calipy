@@ -4,7 +4,7 @@ import glob
 import cv2
 import numpy as np
 
-def main(videos_dir, ext='.hevc'):
+def main(videos_dir, ext='*.hevc'):
     os.chdir(videos_dir)
     for video_path in glob.glob(ext): 
         print(video_path)
