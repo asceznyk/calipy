@@ -8,7 +8,7 @@ def load_img_vector_pairs(_dir):
     os.chdir(_dir)
     labels = []
     imgs = []
-    for file in glob.glob('*'):
+    for file in sorted(glob.glob('*')):
         if file.endswith('.txt'):
             print(file)
             labels.extend(np.loadtxt(f'{_dir}/{file}'))
