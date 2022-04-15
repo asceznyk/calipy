@@ -14,6 +14,7 @@ def load_img_vector_pairs(_dir):
         elif file.endswith('.npy'):
             imgs.append(np.load(open(f'{_dir}/{file}' , 'rb')))
 
+    print(imgs.shape)
     return np.stack(imgs), np.stack(labels)
 
 
