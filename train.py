@@ -13,6 +13,7 @@ def main(train_dir):
     data = CalibData(imgs, labels)
 
     img, label = data[0]
+    print(label)
     print(img.size(), label.size())
 
     #loader = DataLoader()

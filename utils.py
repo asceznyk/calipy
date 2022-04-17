@@ -13,7 +13,7 @@ class CalibData(Dataset):
 
     def __getitem__(self, i):
         img = torch.tensor(self.imgs[i]/255.0).float()
-        label = self.labels[i]
+        label = self.labels[i].float()
         return img, label
 
 def load_img_vector_pairs(_dir):
