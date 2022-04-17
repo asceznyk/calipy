@@ -12,7 +12,8 @@ def main(train_dir):
     imgs, labels = load_img_vector_pairs(train_dir)
     data = CalibData(imgs, labels)
 
-    print(data[0])
+    img, label = data[0]
+    print(img.size(), label.size())
 
     #loader = DataLoader()
 
