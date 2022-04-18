@@ -12,10 +12,10 @@ class CalibNet(nn.Module):
 
         self.base_cnn = nn.Sequential(
             self._block(img_dim[0], 24, 5, 2),
+            self._block(12, 24, 5, 2),
             self._block(24, 36, 5, 2),
             self._block(36, 48, 5, 2),
             self._block(48, 64, 3, 1),
-            self._block(64, 64, 3, 1),
             self._block(64, 64, 3, 1),
             nn.Flatten(),
         )
