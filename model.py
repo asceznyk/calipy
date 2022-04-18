@@ -11,7 +11,7 @@ class CalibNet(nn.Module):
         self.ang_dim = ang_dim
 
         self.base_cnn = nn.Sequential(
-            self._block(img_dim[0], 24, 5, 2),
+            self._block(img_dim[0], 12, 5, 2),
             self._block(12, 24, 5, 2),
             self._block(24, 36, 5, 2),
             self._block(36, 48, 5, 2),
