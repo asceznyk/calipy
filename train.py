@@ -20,14 +20,23 @@ def main(train_dir):
     label_size = label.size()
     loader = DataLoader(data, batch_size=batch_size, shuffle=True)
 
+    model = CalibNet(img_size, label_size)
+
     x, _ = next(iter(loader))
     print(x.size())
 
-    model = CalibNet(img_size, label_size)
-
     out = model(x)
+
     print(out.size())
     print(out)
+
+    x, _ = next(iter(loader))
+    print(x.size())
+
+    out = model(x)
+
+    print(out.size())
+    print(out) 
 
 if __name__ == '__main__':
     main(sys.argv[1])

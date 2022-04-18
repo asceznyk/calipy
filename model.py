@@ -44,22 +44,19 @@ class CalibNet(nn.Module):
 
     def _dense(self, x):
         if not self._w:
+            print('no dynamic')
             self._w = nn.Parameter(torch.randn(200, x.size()[1]))
         return F.linear(x, weight=self._w) 
 
-    def forward(self, x):
+    def forward(self, x, y=None):
         x = self.base_cnn(x)
         x = self._dense(x)
-        x = self.base_dense(x)
-        return x
+        p = self.base_dense(x)
 
+        loss = None
+        if y: loss = F.mse_loss(p, y)
 
-
-
-
-
-
-
+        return x, loss
 
 
 
