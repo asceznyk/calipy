@@ -16,8 +16,8 @@ def main(train_dir):
 
     data = CalibData(imgs, labels)
     img, label = data[0]
-    img_size = img.shape[1:]
-    label_size = label.shape[1:]
+    img_size = img.size()
+    label_size = label.size()
     loader = DataLoader(data, batch_size=batch_size, shuffle=True)
 
     x, _ = next(iter(loader))
