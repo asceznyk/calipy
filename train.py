@@ -26,7 +26,6 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
         for step, batch in pbar:
-            print(step)
             batch = [i.to(device) for i in batch]
             imgs, labels = batch
             
@@ -73,6 +72,8 @@ def main(args):
     model = CalibNet(img.size(), label.size())
 
     single_batch = next(iter(train_loader))
+
+    print(single_batch)
 
     fit(model, single_batch, epochs=args.epochs)
 
