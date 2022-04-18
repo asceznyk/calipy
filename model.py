@@ -56,9 +56,10 @@ class CalibNet(nn.Module):
         loss = None
         print(p)
         print(y)
-        if y is not None: loss = F.mse_loss(p, y)
+        if y is not None: 
+            loss = F.mse_loss(p, y, torch.nan_to_num(y))
 
-        return x, loss
+        return p, loss
 
 
 
