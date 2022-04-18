@@ -43,8 +43,7 @@ class CalibNet(nn.Module):
         )
 
     def _dense(self, x):
-        if not self._w:
-            print('no dynamic')
+        if type(self._w) == type(None):
             self._w = nn.Parameter(torch.randn(200, x.size()[1]))
         return F.linear(x, weight=self._w) 
 

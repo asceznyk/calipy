@@ -22,10 +22,10 @@ def main(train_dir):
 
     model = CalibNet(img_size, label_size)
 
-    x, _ = next(iter(loader))
+    x, y = next(iter(loader))
     print(x.size())
 
-    out, loss = model(x)
+    out, loss = model(x, y)
 
     print(out.size(), loss)
     print(out)
