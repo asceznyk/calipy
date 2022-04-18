@@ -20,9 +20,9 @@ class CalibNet(nn.Module):
             nn.Flatten(),
         )
 
-        self.base_dense = nn.Sequential(
+        '''self.base_dense = nn.Sequential(
             nn.Linear()
-        )
+        )'''
 
     def _block(self, in_channels, out_channels, k_size, stride, bias=False):
         return nn.Sequential(
@@ -32,7 +32,7 @@ class CalibNet(nn.Module):
         )
 
     def forward(self, x):
-        x = self.base(x)
+        x = self.base_cnn(x)
         return x
 
 
