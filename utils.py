@@ -36,6 +36,10 @@ def load_img_vector_pairs(_dir):
 
     return np.array(imgs), np.array(labels)
 
+def get_mse(gt, test):
+  test = np.nan_to_num(test)
+  return np.mean(np.nanmean((gt - test)**2, axis=0))
+
 
 
 

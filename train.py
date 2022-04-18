@@ -33,6 +33,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 preds, loss = model(imgs, labels)
                 print(preds)
                 print(labels)
+                mse = get_mse(labels.detach().cpu().numpy(), preds.detach().cpu().numpy())
+                print(mse)
                 avg_loss += loss.item() / len(loader)
 
             if is_train:
