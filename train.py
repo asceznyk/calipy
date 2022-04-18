@@ -25,17 +25,17 @@ def main(train_dir):
     x, _ = next(iter(loader))
     print(x.size())
 
-    out = model(x)
+    out, loss = model(x)
 
-    print(out.size())
+    print(out.size(), loss)
     print(out)
 
     x, _ = next(iter(loader))
     print(x.size())
 
-    out = model(x)
+    out, loss = model(x)
 
-    print(out.size())
+    print(out.size(), loss)
     print(out) 
 
 if __name__ == '__main__':
