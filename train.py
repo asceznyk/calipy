@@ -31,10 +31,18 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
             
             with torch.set_grad_enabled(is_train):  
                 preds, loss = model(imgs, labels)
+                
                 print(preds)
                 print(labels)
-                mse = get_mse(labels.detach().cpu().numpy(), preds.detach().cpu().numpy())
-                print(mse)
+
+                gt = labels.detach().cpu().numpy()
+
+                err = get_mse(gt, preds.detach().cpu().numpy())
+                zero = get_mse(gt, np.zeros_like(gt))
+
+                percent_mse_vs_zeros = 100 * np.mean(err)/np.mean(zero)
+                print(f'your error score is {percent_mse_vs_zeros:.2f}%')
+
                 avg_loss += loss.item() / len(loader)
 
             if is_train:
