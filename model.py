@@ -20,19 +20,37 @@ class CalibNet(nn.Module):
             nn.Flatten(),
         )
 
-        '''self.base_dense = nn.Sequential(
-            nn.Linear()
-        )'''
+        self.base_dense = nn.Sequential(
+            self.linear_block(200, 100)
+            self.linear_block(100, 50),
+            self.linear_block(50, 10),
+            self.linear_block(10, ang_dim[0])
+        )
 
-    def _block(self, in_channels, out_channels, k_size, stride, bias=False):
+        self._w = None
+
+    def cnn_block(self, in_channels, out_channels, k_size, stride, bias=False):
         return nn.Sequential(
             nn.Conv2d(in_channels, out_channels, k_size, stride, bias=bias),
             nn.ReLU(),
             nn.BatchNorm2d(out_channels)
         )
 
+    def linear_block(self, in_units, out_units):
+        return nn.Sequential(
+            nn.Linear(in_units, out_units),
+            nn.ReLU()
+        )
+
+    def _dense(self, x):
+        if not self._w:
+            self._w = nn.Parameter(torch.randn(200, x.size()[1]))
+        return F.linear(x, weight=self._w) 
+
     def forward(self, x):
         x = self.base_cnn(x)
+        x = self._dense(x)
+        x = self.base_dense(x)
         return x
 
 
