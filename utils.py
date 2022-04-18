@@ -15,8 +15,8 @@ class CalibData(Dataset):
         return self.imgs.shape[0]
 
     def __getitem__(self, i):
-        size = img.size()
         img = torch.from_numpy(self.imgs[i]/255.0).float()
+        size = img.size()
         label = torch.from_numpy(self.labels[i]).float()
         return img.view(size[2], size[0], size[1]), label
 
