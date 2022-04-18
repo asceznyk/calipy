@@ -10,7 +10,7 @@ from utils import *
 from model import *
 
 def main(train_dir):
-    batch_size = 8
+    batch_size = 2
     
     imgs, labels = load_img_vector_pairs(train_dir) 
 
