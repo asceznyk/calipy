@@ -54,7 +54,7 @@ def main(args):
     
     imgs, labels = load_img_vector_pairs(args.main_dir)
 
-    x_train, x_valid, y_train, y_valid = train_test_split(imgs, labels, split=0.1)
+    x_train, x_valid, y_train, y_valid = train_test_split(imgs, labels, test_size=0.1)
 
     train_data = CalibData(x_train, y_train)
     img, label = train_data[0]
