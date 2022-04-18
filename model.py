@@ -44,6 +44,7 @@ class CalibNet(nn.Module):
 
     def _dense(self, x):
         if type(self._w) == type(None):
+            print('weight re-init')
             self._w = nn.Parameter(torch.randn(200, x.size()[1]))
         return F.linear(x, weight=self._w) 
 
@@ -53,7 +54,7 @@ class CalibNet(nn.Module):
         p = self.base_dense(x)
 
         loss = None
-        if y: loss = F.mse_loss(p, y)
+        if y is not None: loss = F.mse_loss(p, y)
 
         return x, loss
 
