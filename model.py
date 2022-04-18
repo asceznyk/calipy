@@ -10,15 +10,19 @@ class CalibNet(nn.Module):
         self.img_dim = img_dim
         self.ang_dim = ang_dim
 
-        self.base = nn.Sequential(
+        self.base_cnn = nn.Sequential(
             self._block(img_dim[0], 24, 5, 2),
             self._block(24, 36, 5, 2),
             self._block(36, 48, 5, 2),
             self._block(48, 64, 3, 1),
             self._block(64, 64, 3, 1),
-            #nn.Flatten(),
-            #nn.Linear()
-        ) 
+            self._block(64, 64, 3, 1),
+            nn.Flatten(),
+        )
+
+        self.base_dense = nn.Sequential(
+            nn.Linear()
+        )
 
     def _block(self, in_channels, out_channels, k_size, stride, bias=False):
         return nn.Sequential(
