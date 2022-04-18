@@ -11,6 +11,9 @@ class CalibData(Dataset):
         self.imgs = imgs
         self.labels = labels
 
+    def __len__(self):
+        return self.imgs.shape[0]
+
     def __getitem__(self, i):
         size = img.size()
         img = torch.from_numpy(self.imgs[i]/255.0).float()
