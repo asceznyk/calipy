@@ -5,7 +5,7 @@ import numpy as np
 
 from torch.utils.data import Dataset, DataLoader
 
-import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
 from utils import *
 from model import *
