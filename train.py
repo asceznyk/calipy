@@ -71,10 +71,7 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    single_batch = next(iter(train_loader))
-
-    print(single_batch)
-
+    single_batch = DataLoader(CalibData(imgs[:batch_size], labels[:batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)
 
 if __name__ == '__main__':
