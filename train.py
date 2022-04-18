@@ -25,9 +25,9 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
         avg_loss = 0
         pbar = tqdm(enumerate(loader), total=len(loader))
-        for step, batch in pbar: 
+        for step, batch in pbar:
+            print(step)
             batch = [i.to(device) for i in batch]
-            print(batch)
             imgs, labels = batch
             
             with torch.set_grad_enabled(is_train):  
