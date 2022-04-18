@@ -6,6 +6,7 @@ import torch.nn.functional as F
 
 class CalibNet(nn.Module):
     def __init__(self, img_dim, ang_dim):
+        super(CalibNet, self).__init__()
         self.img_dim = img_dim
         self.ang_dim = ang_dim
 
@@ -14,7 +15,7 @@ class CalibNet(nn.Module):
             self._block(24, 36, 5, 2),
             self._block(36, 48, 5, 2),
             self._block(48, 64, 3, 1),
-            self._block(64 ,64, 3, 1),
+            self._block(64, 64, 3, 1),
             #nn.Flatten(),
             #nn.Linear()
         ) 
