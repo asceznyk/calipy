@@ -12,9 +12,10 @@ class CalibData(Dataset):
         self.labels = labels
 
     def __getitem__(self, i):
+        size = img.size()
         img = torch.from_numpy(self.imgs[i]/255.0).float()
         label = torch.from_numpy(self.labels[i]).float()
-        return img, label
+        return img.view(size[2], size[0], size[1]), label
 
 def load_img_vector_pairs(_dir):
     os.chdir(_dir)

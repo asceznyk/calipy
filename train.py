@@ -7,16 +7,25 @@ from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 
 from utils import *
+from model import *
 
 def main(train_dir):
+    batch_size = 8
+    
     imgs, labels = load_img_vector_pairs(train_dir)
+    img_size = imgs.shape[1:]
+    label_size = labels.shape[1:]
+
     data = CalibData(imgs, labels)
+    loader = DataLoader(data, batch_size=batch_size, shuffle=True)
 
-    img, label = data[0]
-    print(img, label)
-    print(img.size(), label.size())
+    x, _ = next(iter(loader))
+    print(x.size())
 
-    #loader = DataLoader()
+    model = CalibNet(img_size, label_size)
+
+    out = model(x)
+    print(out.size())
 
 if __name__ == '__main__':
     main(sys.argv[1])
