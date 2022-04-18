@@ -54,6 +54,8 @@ class CalibNet(nn.Module):
         p = self.base_dense(x)
 
         loss = None
+        print(p)
+        print(y)
         if y is not None: loss = F.mse_loss(p, y)
 
         return x, loss
