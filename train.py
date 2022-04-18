@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 from utils import *
 from model import *
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001):  
     def run_epoch(split):
         is_train = split == 'train' 
@@ -48,8 +50,6 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
 
 def main(args):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     batch_size = args.batch_size
     
     imgs, labels = load_img_vector_pairs(args.main_dir)
