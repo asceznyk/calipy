@@ -30,13 +30,13 @@ def main(train_dir):
     print(out.size(), loss)
     print(out)
 
-    x, _ = next(iter(loader))
+    x, y = next(iter(loader))
     print(x.size())
 
-    out, loss = model(x)
+    out, loss = model(x, y)
 
     print(out.size(), loss)
-    print(out) 
+    print(out)
 
 if __name__ == '__main__':
     main(sys.argv[1])
