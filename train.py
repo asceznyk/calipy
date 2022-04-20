@@ -18,7 +18,7 @@ from model import *
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001):  
+def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.0001):  
     def run_epoch(split):
         is_train = split == 'train' 
         model.train(is_train)
