@@ -33,13 +33,14 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
             with torch.set_grad_enabled(is_train):  
                 preds, loss = model(imgs, labels)
 
-                print('')
-                print(preds)
-                print(labels)
-
                 gt = labels.detach().cpu().numpy() / 100
+                est = preds.detach().cpu().numpy() / 100
 
-                err = get_mse(gt, preds.detach().cpu().numpy() / 100)
+                print('')
+                print(gt)
+                print(est)
+
+                err = get_mse(gt, est)
                 zero = get_mse(gt, np.zeros_like(gt))
 
                 print(err, zero)
