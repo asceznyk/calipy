@@ -86,7 +86,7 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    random_idx = random.randint(0, 1000)
+    random_idx = random.randint(0, 5000)
 
     single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)
