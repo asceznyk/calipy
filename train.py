@@ -88,7 +88,7 @@ def main(args):
 
     random_idx = random.randint(0, 1000)
 
-    single_batch = DataLoader(CalibData(imgs[:batch_size], labels[:batch_size]), batch_size=batch_size)
+    single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)
 
 if __name__ == '__main__':
