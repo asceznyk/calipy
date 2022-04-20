@@ -37,8 +37,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 est = preds.detach().cpu().numpy() / max_scale
 
                 print('')
-                print(est)
-                print(gt)
+                print(preds)
+                print(labels)
 
                 err = get_mse(gt, est)
                 zero = get_mse(gt, np.zeros_like(gt))
