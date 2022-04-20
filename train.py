@@ -85,6 +85,8 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
+    random_idx = random.randint(0, 1000)
+
     single_batch = DataLoader(CalibData(imgs[:batch_size], labels[:batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)
 
@@ -93,7 +95,6 @@ if __name__ == '__main__':
     parser.add_argument('--main_dir', type=str, help='path to data directory')
     parser.add_argument('--epochs', type=int, help='number of epochs to train the model', default=2)
     parser.add_argument('--batch_size', type=int, help='batch size', default=8)
-    #parser.add_argument('--num_workers', type=int, help='num workers', default=2)
 
     options = parser.parse_args()
 
