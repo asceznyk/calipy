@@ -44,7 +44,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
                 print(err, zero)
 
-                percent_mse_vs_zeros = 100*np.mean(err)/np.mean(zero)
+                percent_mse_vs_zeros = 100 * np.mean(err)/np.mean(zero)
                 print(f'your error score is {percent_mse_vs_zeros:.2f}%')
 
                 avg_loss += loss.item() / len(loader)
