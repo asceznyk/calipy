@@ -24,8 +24,7 @@ class CalibNet(nn.Module):
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
-            nn.Linear(10, ang_dim[0]),
-            nn.Sigmoid()
+            nn.Linear(10, ang_dim[0])
         )
 
         self._w = None
