@@ -19,7 +19,7 @@ class CalibData(Dataset):
     def __getitem__(self, i):
         img = torch.from_numpy(self.imgs[i]/255.0).float()
         size = img.size()
-        label = torch.from_numpy(self.labels[i]).float()
+        label = torch.from_numpy(self.labels[i] * 100).float()
         return img.view(size[2], size[0], size[1]), label
 
 def load_img_vector_pairs(_dir):
@@ -34,7 +34,7 @@ def load_img_vector_pairs(_dir):
             print(file)
             imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
 
-    return np.array(imgs), np.array(labels)*100 ##scaled up labels for better loss
+    return np.array(imgs), np.array(labels) ##scaled up labels for better loss
 
 def get_mse(gt, test):
   test = np.nan_to_num(test)
