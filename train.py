@@ -32,7 +32,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
             
             with torch.set_grad_enabled(is_train):  
                 preds, loss = model(imgs, labels)
-                
+
+                print('')
                 print(preds)
                 print(labels)
 
