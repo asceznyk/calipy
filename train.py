@@ -86,7 +86,7 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    random_idx = random.randint(0, 5000)
+    random_idx = 2951 #random.randint(0, 5000)
 
     print(random_idx)
 
