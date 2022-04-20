@@ -34,7 +34,7 @@ def load_img_vector_pairs(_dir):
             print(file)
             imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
 
-    return np.array(imgs), np.array(labels)*100
+    return np.array(imgs), np.array(labels)*10
 
 def get_mse(gt, test):
   test = np.nan_to_num(test)
