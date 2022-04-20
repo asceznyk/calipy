@@ -43,6 +43,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 err = get_mse(gt, est)
                 zero = get_mse(gt, np.zeros_like(gt))
 
+                print(err, zero)
+
                 percent_mse_vs_zeros = 100 * np.mean(err)/np.mean(zero)
                 print(f'your error score is {percent_mse_vs_zeros:.2f}%')
 
@@ -86,7 +88,7 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    random_idx = 2951 #random.randint(0, 5000)
+    random_idx = random.randint(0, 5000)
 
     print(random_idx)
 
