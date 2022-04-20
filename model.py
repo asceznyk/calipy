@@ -24,7 +24,8 @@ class CalibNet(nn.Module):
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
-            nn.Linear(10, ang_dim[0])
+            nn.Linear(10, ang_dim[0]),
+            nn.Sigmoid()
         )
 
         self._w = None
@@ -54,7 +55,7 @@ class CalibNet(nn.Module):
 
         loss = None
         if y is not None: 
-            loss = F.mse_loss(p, torch.nan_to_num(y))
+            loss = F.binary_cross_entropy(p, torch.nan_to_num(y))
 
         return p, loss
 
