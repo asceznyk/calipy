@@ -55,7 +55,8 @@ class CalibNet(nn.Module):
 
         loss = None
         if y is not None: 
-            loss = F.binary_cross_entropy(p, torch.nan_to_num(y))
+            loss = F.binary_cross_entropy(p, torch.nan_to_num(y), reduction='none')
+            loss = torch.mean(torch.sum(loss, dim=1))
 
         return p, loss
 
