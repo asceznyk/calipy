@@ -8,6 +8,8 @@ import torch
 
 from torch.utils.data import Dataset, DataLoader
 
+max_scale = 10
+
 class CalibData(Dataset):
     def __init__(self, imgs, labels):
         self.imgs = imgs
@@ -19,7 +21,7 @@ class CalibData(Dataset):
     def __getitem__(self, i):
         img = torch.from_numpy(self.imgs[i]/255.0).float()
         size = img.size()
-        label = torch.from_numpy(self.labels[i] * 10).float()
+        label = torch.from_numpy(self.labels[i] * max_scale).float()
         return img.view(size[2], size[0], size[1]), label
 
 def load_img_vector_pairs(_dir):
