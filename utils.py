@@ -9,6 +9,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 
 max_scale = 10
+img_size = (3, 200, 266)
+label_size = 2
 
 class CalibData(Dataset):
     def __init__(self, imgs, labels):

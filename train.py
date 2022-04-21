@@ -77,14 +77,12 @@ def main(args):
     x_train, x_valid, y_train, y_valid = train_test_split(imgs, labels, test_size=0.1)
 
     train_data = CalibData(x_train, y_train)
-    img, label = train_data[0]
-
     valid_data = CalibData(x_valid, y_valid)
 
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     valid_loader = DataLoader(valid_data, batch_size=batch_size)
 
-    model = CalibNet(img.size(), label.size())
+    model = CalibNet(img_size, label_size)
 
     fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs) 
 
