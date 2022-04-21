@@ -21,9 +21,10 @@ def main(args):
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
 
+    os.chdir(data_dir)
+    
     print(glob.glob(ext))
 
-    os.chdir(data_dir)
     for video_path in glob.glob(ext):
         cap = cv2.VideoCapture(video_path)
         ret = True
