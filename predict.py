@@ -24,7 +24,7 @@ def main(args):
     f = 0
 
     ext = os.path.splitext(video_path)[1]
-    file = open(video_path.replace(ext, '.txt'), 'wb')
+    file = open(video_path.replace(ext, 'pred.txt'), 'wb')
     while ret:
         ret, img = cap.read() 
         if ret:
@@ -35,7 +35,7 @@ def main(args):
                 angles, _ = model(img)
                 angles = angles.detach().cpu().numpy()
 
-            file.write(np.array2string(angles, seperator=' ')[1:-1]+'\n')
+            file.write(np.array2string(angles, separator=' ')[1:-1]+'\n')
             f += 1
 
     file.close()
