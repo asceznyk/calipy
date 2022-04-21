@@ -21,6 +21,7 @@ class CalibNet(nn.Module):
         )
 
         self.base_dense = nn.Sequential(
+            #nn.Linear(, 200)
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
@@ -43,14 +44,8 @@ class CalibNet(nn.Module):
             nn.ReLU()
         )
 
-    def _dense(self, x, x_device):
-        if type(self._w) == type(None):
-            self._w = nn.Parameter(torch.randn(200, x.size()[1])).to(x_device)
-        return F.linear(x.to(x_device), weight=self._w) 
-
     def forward(self, x, y=None, x_device=torch.device('cpu')):
         x = self.base_cnn(x)
-        x = self._dense(x, x_device=x_device)
         p = self.base_dense(x)
 
         loss = None

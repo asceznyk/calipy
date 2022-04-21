@@ -7,19 +7,21 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-def main(videos_dir, ext='*.hevc'):
-    os.chdir(videos_dir)
-    for video_path in glob.glob(ext): 
-        frames = []
-        cap = cv2.VideoCapture(video_path)
-        ret = True
-        while ret:
-            ret, img = cap.read() 
-            if ret:
-                img = cv2.resize(img, dsize=(266, 200), interpolation=cv2.INTER_CUBIC)
-                frames.append(img)
-                
-        np.save(f'{video_path}.npy', np.stack(frames, axis=0))
+from utils import *
+from model import *
+
+def main(video_path, ext='*.hevc'):
+    model = CalibNet()
+    cap = cv2.VideoCapture(video_path)
+    ret = True
+    while ret:
+        ret, img = cap.read() 
+        if ret:
+            img = cv2.resize(img, dsize=(266, 200), interpolation=cv2.INTER_CUBIC)
+            img = torch.from_numpy(img/255.0).float()
+            
+            
+    np.save(f'{video_path}.npy', np.stack(frames, axis=0))
 
 if __name__ == '__main__':
     main(sys.argv[1])
