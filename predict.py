@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 import argparse
 import cv2
 
@@ -19,6 +20,8 @@ def main(args):
     if args.ckpt_path != '':
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
+
+    print(glob.glob(ext))
 
     os.chdir(data_dir)
     for video_path in glob.glob(ext):
