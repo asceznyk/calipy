@@ -32,6 +32,7 @@ def main(args):
         file = open(video_path.replace(ext, '.pred.txt'), 'w')
 
         while ret:
+            print('--')
             ret, img = cap.read() 
             if ret:
                 img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
