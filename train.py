@@ -53,7 +53,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 loss.backward() 
                 optimizer.step()
 
-            pbar.set_description(f"epoch: {e+1}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}, mse_score_percent: {mse_score_percent}%, avg_mse_perent: {avg_mse_percent}%")     
+            pbar.set_description(f"epoch: {e+1}, avg_loss: {avg_loss:.2f}, avg_mse_perent: {avg_mse_percent}%")     
         return avg_loss
 
     model.to(device)
