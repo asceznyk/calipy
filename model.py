@@ -21,7 +21,7 @@ class CalibNet(nn.Module):
         )
 
         self.base_dense = nn.Sequential(
-            #nn.Linear(, 200)
+            nn.Linear(64 * 5 * 9, 200)
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
@@ -44,7 +44,7 @@ class CalibNet(nn.Module):
             nn.ReLU()
         )
 
-    def forward(self, x, y=None, x_device=torch.device('cpu')):
+    def forward(self, x, y=None):
         x = self.base_cnn(x)
         p = self.base_dense(x)
 
