@@ -15,6 +15,7 @@ def main(args):
     model = CalibNet(img_size, label_size)
     if args.ckpt_path:
         model.load_state_dict(torch.load(args.ckpt_path))
+    model.eval()
 
     cap = cv2.VideoCapture(args.video_path)
     ret = True
@@ -23,9 +24,10 @@ def main(args):
         ret, img = cap.read() 
         if ret:
             img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
-            img = torch.from_numpy(img/255.0).float()
-            img = img.view(*img_size).unsqueeze(0)
-            predictions = model(img)
+            with torch.no_grad():
+                img = torch.from_numpy(img/255.0).float()
+                img = img.view(*img_size).unsqueeze(0)
+                predictions = model(img)
 
             print(predictions, f)
             
