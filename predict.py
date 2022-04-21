@@ -24,7 +24,8 @@ def main(args):
         if ret:
             img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
             img = torch.from_numpy(img/255.0).float()
-            predictions = model(img)
+            img = img.unsqueeze(0)
+            predictions = model(img.view(img_size[2], img_size[0], img_size[1]))
 
             print(predictions, f)
             
