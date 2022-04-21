@@ -24,7 +24,7 @@ def main(args):
     f = 0
 
     ext = os.path.splitext(video_path)[1]
-    file = open(video_path.replace(ext, 'pred.txt'), 'wb')
+    file = open(video_path.replace(ext, 'pred.txt'), 'w')
     while ret:
         ret, img = cap.read() 
         if ret:
