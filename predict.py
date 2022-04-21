@@ -22,20 +22,14 @@ def main(args):
     model.eval()
 
     os.chdir(data_dir)
-    
-    print(glob.glob(ext))
-
     for video_path in glob.glob(ext):
         cap = cv2.VideoCapture(video_path)
         ret = True
         f = 0
-        file = open(video_path.replace(ext, '.pred.txt'), 'w')
-
-        print(video_path)
-
+        file = open(video_path.replace(ext[1:], '.pred.txt'), 'w')
+        
         while ret:
             ret, img = cap.read()
-            print(ret, img)
             if ret:
                 img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
                 with torch.no_grad():
