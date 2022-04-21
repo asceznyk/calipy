@@ -31,6 +31,8 @@ def main(args):
         f = 0
         file = open(video_path.replace(ext, '.pred.txt'), 'w')
 
+        print(video_path)
+
         while ret:
             ret, img = cap.read()
             print(ret, img)
