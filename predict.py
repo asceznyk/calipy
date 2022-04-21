@@ -12,14 +12,19 @@ from utils import *
 from model import *
 
 def main(args):
+    video_path = args.video_path
+
     model = CalibNet(img_size, label_size)
     if args.ckpt_path:
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
 
-    cap = cv2.VideoCapture(args.video_path)
+    cap = cv2.VideoCapture(video_path)
     ret = True
     f = 0
+
+    ext = os.path.splitext(video_path)[1]
+    file = open(video_path.replace(ext, '.txt'), 'wb')
     while ret:
         ret, img = cap.read() 
         if ret:
@@ -27,11 +32,13 @@ def main(args):
             with torch.no_grad():
                 img = torch.from_numpy(img/255.0).float()
                 img = img.view(*img_size).unsqueeze(0)
-                predictions = model(img)
+                angles, _ = model(img)
+                angles = angles.detach().cpu().numpy()
 
-            print(predictions, f)
-            
+            file.write(np.array2string(angles, seperator=' ')[1:-1]+'\n')
             f += 1
+
+    file.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
