@@ -24,7 +24,7 @@ def main(args):
     f = 0
 
     ext = os.path.splitext(video_path)[1]
-    file = open(video_path.replace(ext, 'pred.txt'), 'w')
+    file = open(video_path.replace(ext, '.pred.txt'), 'w')
     while ret:
         ret, img = cap.read() 
         if ret:
@@ -33,9 +33,10 @@ def main(args):
                 img = torch.from_numpy(img/255.0).float()
                 img = img.view(*img_size).unsqueeze(0)
                 angles, _ = model(img)
-                angles = angles.detach().cpu().numpy()
+                angles = angles.detach().cpu().numpy()[0]
+                angles /= max_scale 
 
-            file.write(np.array2string(angles, separator=' ')[1:-1]+'\n')
+            file.write(np.array2string(angles, separator=' ') [1:-1]+ '\n')
             f += 1
 
     file.close()
@@ -49,13 +50,6 @@ if __name__ == '__main__':
     print(options)
 
     main(options)
-
-
-
-
-
-
-
 
 
 
