@@ -14,6 +14,7 @@ from model import *
 
 def main(args):
     data_dir = args.data_dir
+    out_dir = args.out_dir
     ext = args.ext
 
     model = CalibNet(img_size, label_size)
@@ -26,7 +27,7 @@ def main(args):
         cap = cv2.VideoCapture(video_path)
         ret = True
         f = 0
-        file = open(video_path.replace(ext[1:], '.pred.txt'), 'w')
+        file = open(out_dir + video_path.replace(ext[1:], '.pred.txt'), 'w')
         
         while ret:
             ret, img = cap.read()
@@ -48,6 +49,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str, help='path to input videos directory')
+    parser.add_argument('--out_dir', type=str, help='path to output predictions directory')
     parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
     parser.add_argument('--ext', default='*.hevc', type=str, help='format of video (ext)')
     options = parser.parse_args()
