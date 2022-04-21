@@ -33,7 +33,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--video_path', type=str, help='path to input video')
-    parser.add_argument('--ckpt_path', default='' type=str, help='path to trained model')
+    parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
     options = parser.parse_args()
 
     print(options)
