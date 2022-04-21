@@ -84,12 +84,12 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    random_idx = random.randint(0, 5000)
+    fit(model, train_loader, valid_loader, epochs=args.epochs) ##beta-level
 
+    '''random_idx = random.randint(0, 5000)
     print(random_idx)
-
     single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
-    fit(model, single_batch, epochs=args.epochs)
+    fit(model, single_batch, epochs=args.epochs)'''
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
