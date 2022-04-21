@@ -21,7 +21,7 @@ class CalibNet(nn.Module):
         )
 
         self.base_dense = nn.Sequential(
-            nn.Linear(64 * 5 * 9, 200)
+            nn.Linear(64 * 5 * 9, 200),
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
