@@ -43,10 +43,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 err = get_mse(gt, est)
                 zero = get_mse(gt, np.zeros_like(gt))
 
-                print(err, zero)
-
                 percent_mse_vs_zeros = 100 * np.mean(err)/(np.mean(zero) + 1e-5) 
-                print(f'your error score is {percent_mse_vs_zeros:.2f}%')
 
                 avg_loss += loss.item() / len(loader)
 
@@ -55,7 +52,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 loss.backward() 
                 optimizer.step()
 
-            pbar.set_description(f"epoch: {e+1}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}")     
+            pbar.set_description(f"epoch: {e+1}, loss: {loss.item():.3f}, avg: {avg_loss:.2f}, mse_error: {percent_mse_vs_zeros}%")     
         return avg_loss
 
     model.to(device)
@@ -88,7 +85,7 @@ def main(args):
 
     model = CalibNet(img.size(), label.size())
 
-    random_idx = 4502 #random.randint(0, 5000)
+    random_idx = random.randint(0, 5000)
 
     print(random_idx)
 
