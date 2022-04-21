@@ -27,7 +27,7 @@ def main(args):
         cap = cv2.VideoCapture(video_path)
         ret = True
         f = 0
-        file = open(out_dir + video_path.replace(ext[1:], '.pred.txt'), 'w')
+        file = open(out_dir + '/' + video_path.replace(ext[1:], '.pred.txt'), 'w')
         
         while ret:
             ret, img = cap.read()
