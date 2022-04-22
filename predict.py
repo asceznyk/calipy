@@ -49,7 +49,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, help='path to input videos directory')
+    parser.add_argument('--data_dir', type=str, help='path to input ideos directory')
     parser.add_argument('--out_dir', type=str, help='path to output predictions directory')
     parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
     parser.add_argument('--ext', default='*.hevc', type=str, help='format of video (ext)')
