@@ -58,7 +58,7 @@ def main(args):
                 f += 1
             
         ani = animation.ArtistAnimation(
-            fig, frames, interval=50, blit=True, repeat_delay=1000
+            fig, frames, interval=40, blit=True, repeat_delay=1000
         )
         ani.save(f'{video_path}.mp4')
 
