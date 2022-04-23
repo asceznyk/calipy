@@ -48,14 +48,12 @@ def main(args):
                 255
             )
             _img = plt.imshow(_img, animated=True)
-
             frames.append([_img])
 
-
-        ani = animation.ArtistAnimation(
-            fig, frames, interval=50, blit=True, repeat_delay=1000
-        )
-        ani.save('angle_video.mp4')
+    ani = animation.ArtistAnimation(
+        fig, frames, interval=50, blit=True, repeat_delay=1000
+    )
+    ani.save('angle_video.mp4')
 
 
 if __name__ == '__main__':
