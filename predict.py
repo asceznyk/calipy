@@ -40,17 +40,7 @@ def main(args):
                     img = img.view(*img_size).unsqueeze(0)
                     angles, _ = model(img)
                     angles = angles.detach().cpu().numpy()[0]
-                    angles /= max_scale
-
-                angle_str = np.array2string(angles, separator=' ')[1:-1]
-                _img = cv2.putText(
-                    _img, 
-                    angle_str, 
-                    (10,20), 
-                    cv2.CV_FONT_HERSHEY_SIMPLEX, 
-                    2, 
-                    255
-                )
+                    angles /= max_scale 
 
                 angle_str = np.array2string(angles, separator=' ')[1:-1]
                 _img = cv2.putText(
@@ -68,7 +58,7 @@ def main(args):
                 f += 1
             
         ani = animation.ArtistAnimation(
-            fig, frames, interval=20, blit=True, repeat_delay=1000
+            fig, frames, interval=50, blit=True, repeat_delay=1000
         )
         ani.save(f'{video_path}.mp4')
 
