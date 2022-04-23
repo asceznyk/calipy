@@ -47,6 +47,7 @@ def main(args):
                 0.25, 
                 255
             )
+            _img = plt.imshow(_img, animated=True)
 
             frames.append([_img])
 
