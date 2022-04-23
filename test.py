@@ -36,7 +36,7 @@ def main(args):
             _img = cv2.putText(
                 _img, 
                 angle_str, 
-                (50,50), 
+                (0,0), 
                 cv2.FONT_HERSHEY_SIMPLEX, 
                 0.25, 
                 255
