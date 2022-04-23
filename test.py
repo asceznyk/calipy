@@ -2,6 +2,7 @@ import os
 import sys
 import glob
 import cv2
+import subprocess
 
 import numpy as np
 
@@ -42,8 +43,18 @@ def main(args):
                 255
             )
 
-            cv2.imwrite('angles_img.png', _img)
+            plt.imshow(_img, interpolation='nearest') 
+            plt.savefig("/file%02d.png" % f)
+ 
             f += 1
+
+        subprocess.call([
+                'ffmpeg', '-framerate', '8', '-i', 'file%02d.png', '-r', '30', '-pix_fmt', 'yuv420p',
+                'saved_vid.mp4'
+            ])
+        for file_name in glob.glob("*.png"):
+            os.remove(file_name)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
