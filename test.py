@@ -36,15 +36,13 @@ def main(args):
             _img = cv2.putText(
                 _img, 
                 angle_str, 
-                (0,0), 
+                (50,50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 
-                2, 
+                0.25, 
                 255
             )
 
             cv2.imwrite('angles_img.png', _img)
-
-            file.write(angle_str+'\n')
             f += 1
 
 if __name__ == '__main__':
