@@ -32,6 +32,8 @@ def main(args):
         ret = True
         f = 0
         file = open(out_dir + '/' + video_path.replace(ext[1:], '.txt'), 'w')
+
+        fig = plt.figure() 
         
         frames = [] 
         while ret:
