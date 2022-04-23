@@ -42,7 +42,7 @@ def main(args):
                     angles /= max_scale
 
                 angle_str = np.array2string(angles, separator=' ')[1:-1]
-                cv2.putText(
+                _img = cv2.putText(
                     _img, 
                     angle_str, 
                     (0,0), 
@@ -50,6 +50,8 @@ def main(args):
                     2, 
                     255
                 )
+
+                cv2.imwrite('angles_img.png', _img)
 
                 file.write(angle_str+'\n')
                 f += 1
