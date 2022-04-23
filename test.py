@@ -15,6 +15,11 @@ def main(video_path):
     cap = cv2.VideoCapture(video_path)
     ret = True
     f = 0
+
+    model = CalibNet(img_size, label_size)
+    if args.ckpt_path != '':
+        model.load_state_dict(torch.load(args.ckpt_path))
+    model.eval()
    
     while ret:
         ret, img = cap.read()
