@@ -24,6 +24,7 @@ def main(args):
 
     os.mkdir(out_dir)
     os.chdir(data_dir)
+
     for video_path in glob.glob(ext):
         cap = cv2.VideoCapture(video_path)
         ret = True
@@ -51,10 +52,25 @@ def main(args):
                     255
                 )
 
-                cv2.imwrite('angles_img.png', _img)
+                angle_str = np.array2string(angles, separator=' ')[1:-1]
+                _img = cv2.putText(
+                    _img, 
+                    angle_str, 
+                    (10, 20), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 
+                    0.25, 
+                    255
+                )
+                _img = plt.imshow(_img, animated=True)
+                frames.append([_img])
 
                 file.write(angle_str+'\n')
                 f += 1
+            
+        ani = animation.ArtistAnimation(
+            fig, frames, interval=20, blit=True, repeat_delay=1000
+        )
+        ani.save(f'{video_path}.mp4')
 
         file.close()
         print(f'finished predicting on video: {video_path}')

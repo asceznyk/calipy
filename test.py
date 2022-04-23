@@ -50,12 +50,10 @@ def main(args):
             _img = plt.imshow(_img, animated=True)
             frames.append([_img])
 
-            print(f)
-
             f += 1
 
     ani = animation.ArtistAnimation(
-        fig, frames, interval=50, blit=True, repeat_delay=1000
+        fig, frames, interval=20, blit=True, repeat_delay=1000
     )
     ani.save('angle_video.mp4')
 
