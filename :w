@@ -33,9 +33,9 @@ def main(args):
         while ret:
             ret, img = cap.read()
             if ret:
-                _img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
+                img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
                 with torch.no_grad():
-                    img = torch.from_numpy(_img/255.0).float()
+                    img = torch.from_numpy(img/255.0).float()
                     img = img.view(*img_size).unsqueeze(0)
                     angles, _ = model(img)
                     angles = angles.detach().cpu().numpy()[0]
@@ -43,13 +43,14 @@ def main(args):
 
                 angle_str = np.array2string(angles, separator=' ')[1:-1]
                 cv2.putText(
-                    _img, 
+                    img, 
                     angle_str, 
                     (0,0), 
                     cv2.CV_FONT_HERSHEY_SIMPLEX, 
                     2, 
                     255
                 )
+
 
                 file.write(angle_str+'\n')
                 f += 1
