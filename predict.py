@@ -33,6 +33,7 @@ def main(args):
         f = 0
         file = open(out_dir + '/' + video_path.replace(ext[1:], '.txt'), 'w')
         
+        frames = [] 
         while ret:
             ret, img = cap.read()
             if ret:
