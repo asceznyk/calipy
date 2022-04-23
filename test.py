@@ -22,7 +22,8 @@ def main(args):
     if args.ckpt_path != '':
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
-   
+
+    frames = [] 
     while ret:
         ret, img = cap.read()
         if ret:
@@ -44,17 +45,12 @@ def main(args):
                 255
             )
 
-            plt.imshow(_img, interpolation='nearest') 
-            plt.savefig("file%02d.png" % f)
- 
-            f += 1
+            frames.append([_img])
 
-    subprocess.call([
-            'ffmpeg', '-framerate', '8', '-i', 'file%02d.png', '-r', '30', '-pix_fmt', 'yuv420p',
-            'saved_vid.mp4'
-        ])
-    for file_name in glob.glob("*.png"):
-        os.remove(file_name)
+
+        ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
+                                repeat_delay=1000)
+        ani.save('angle_video.mp4')
 
 
 if __name__ == '__main__':
