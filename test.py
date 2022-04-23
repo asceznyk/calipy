@@ -49,12 +49,12 @@ def main(args):
  
             f += 1
 
-        subprocess.call([
-                'ffmpeg', '-framerate', '8', '-i', 'file%02d.png', '-r', '30', '-pix_fmt', 'yuv420p',
-                'saved_vid.mp4'
-            ])
-        for file_name in glob.glob("*.png"):
-            os.remove(file_name)
+    subprocess.call([
+            'ffmpeg', '-framerate', '8', '-i', 'file%02d.png', '-r', '30', '-pix_fmt', 'yuv420p',
+            'saved_vid.mp4'
+        ])
+    for file_name in glob.glob("*.png"):
+        os.remove(file_name)
 
 
 if __name__ == '__main__':
