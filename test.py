@@ -37,7 +37,7 @@ def main(args):
                 _img, 
                 angle_str, 
                 (0,0), 
-                cv2.CV_FONT_HERSHEY_SIMPLEX, 
+                cv2.FONT_HERSHEY_SIMPLEX, 
                 2, 
                 255
             )
