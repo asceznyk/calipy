@@ -11,8 +11,8 @@ import torch.nn as nn
 from utils import *
 from model import *
 
-def main(video_path):
-    cap = cv2.VideoCapture(video_path)
+def main(args):
+    cap = cv2.VideoCapture(args.video_path)
     ret = True
     f = 0
 
@@ -48,7 +48,15 @@ def main(video_path):
             f += 1
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--video_path', type=str, help='path to input video')
+    parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
+    options = parser.parse_args()
+
+    print(options)
+
+    main(options)
+
 
 
 
