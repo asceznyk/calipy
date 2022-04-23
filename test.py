@@ -45,7 +45,7 @@ def main(args):
             )
 
             plt.imshow(_img, interpolation='nearest') 
-            plt.savefig("/file%02d.png" % f)
+            plt.savefig("file%02d.png" % f)
  
             f += 1
 
