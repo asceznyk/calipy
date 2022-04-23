@@ -6,6 +6,7 @@ import subprocess
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 import torch
 import torch.nn as nn
@@ -17,6 +18,8 @@ def main(args):
     cap = cv2.VideoCapture(args.video_path)
     ret = True
     f = 0
+
+    fig = plt.figure()
 
     model = CalibNet(img_size, label_size)
     if args.ckpt_path != '':
@@ -48,7 +51,7 @@ def main(args):
             frames.append([_img])
 
 
-        ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
+        ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
                                 repeat_delay=1000)
         ani.save('angle_video.mp4')
 
