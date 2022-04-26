@@ -18,6 +18,7 @@ def main(args):
     data_dir = args.data_dir
     out_dir = args.out_dir
     ext = args.ext
+    make_video = args.make_video
 
     model = CalibNet(img_size, label_size)
     if args.ckpt_path != '':
@@ -33,9 +34,9 @@ def main(args):
         f = 0
         file = open(out_dir + '/' + video_path.replace(ext[1:], '.txt'), 'w')
 
-        fig = plt.figure() 
-        
+        fig = plt.figure()  
         frames = [] 
+
         while ret:
             ret, img = cap.read()
             if ret:
@@ -48,24 +49,27 @@ def main(args):
                     angles /= max_scale 
 
                 angle_str = np.array2string(angles, separator=' ')[1:-1]
-                _img = cv2.putText(
-                    _img, 
-                    angle_str, 
-                    (10, 20), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 
-                    0.25, 
-                    255
-                )
-                _img = plt.imshow(_img, animated=True)
-                frames.append([_img])
+                
+                if make_video:
+                    _img = cv2.putText(
+                        _img, 
+                        angle_str, 
+                        (10, 20), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 
+                        0.25, 
+                        255
+                    )
+                    _img = plt.imshow(_img, animated=True)
+                    frames.append([_img])
 
                 file.write(angle_str+'\n')
                 f += 1
-            
-        ani = animation.ArtistAnimation(
-            fig, frames, interval=40, blit=True, repeat_delay=1000
-        )
-        ani.save(f'{video_path}.mp4')
+        
+        if make_video:
+            ani = animation.ArtistAnimation(
+                fig, frames, interval=40, blit=True, repeat_delay=1000
+            )
+            ani.save(f'{video_path}.mp4')
 
         file.close()
         print(f'finished predicting on video: {video_path}')
@@ -76,6 +80,7 @@ if __name__ == '__main__':
     parser.add_argument('--out_dir', type=str, help='path to output predictions directory')
     parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
     parser.add_argument('--ext', default='*.hevc', type=str, help='format of video (ext)')
+    parser.add_argument('--make_video', type=int, default=0, help='make video if needed')
     options = parser.parse_args()
 
     print(options)
