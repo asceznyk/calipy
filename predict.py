@@ -24,8 +24,10 @@ def main(args):
     if args.ckpt_path != '':
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
+    
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
 
-    os.mkdir(out_dir)
     os.chdir(data_dir)
 
     for video_path in glob.glob(ext):
