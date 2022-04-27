@@ -39,7 +39,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
                 err_mse = get_mse(gt, mp)
                 zero_mse = get_mse(gt, np.zeros_like(gt))
-                mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-5)
+                mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-10)
 
                 avg_loss += loss.item() / len(loader)
                 avg_mse_percent += mse_score_percent / len(loader)
