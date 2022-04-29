@@ -69,7 +69,7 @@ def main(args):
     batch_size = args.batch_size
     main_dir = args.main_dir
     
-    imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir)
+    imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir, ignore_file='2')
 
     print(f'test file: {test_file}')
     imgs_test = np.load(open(f'{main_dir}{test_file}.hevc.npy', 'rb'))
