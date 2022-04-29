@@ -72,7 +72,7 @@ def main(args):
     imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir)
 
     print(f'test file: {test_file}')
-    imgs_test = np.load(open(f'{main_dir}{test_file}.npy', 'rb'))
+    imgs_test = np.load(open(f'{main_dir}{test_file}.hevc.npy', 'rb'))
     labels_test = np.loadtxt(f'{main_dir}{test_file}.txt')
 
     x_train, x_valid, y_train, y_valid = train_test_split(imgs_train, labels_train, test_size=0.1)
