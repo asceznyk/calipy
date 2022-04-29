@@ -34,6 +34,7 @@ def load_img_vector_pairs(_dir, ignore_idx=0):
     ignore_file = '' 
     for i, file in enumerate(sorted(glob.glob('*'))):
         if i != ignore_idx:
+            print(ignore_idx, i)
             if file.endswith('.txt'):
                 print(file)
                 labels.extend(np.loadtxt(f'{_dir}/{file}'))
