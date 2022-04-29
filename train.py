@@ -77,6 +77,7 @@ def main(args):
 
     x_train, x_valid, y_train, y_valid = train_test_split(imgs_train, labels_train, test_size=0.1)
 
+    print(x_train.shape, y_train.shape, x_valid.shape, y_valid.shape)
     print(imgs_test.shape, labels_test.shape)
     print(labels_test)
 
