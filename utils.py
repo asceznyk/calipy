@@ -39,7 +39,7 @@ def load_img_vector_pairs(_dir, ignore_idx=0):
                 print(file)
                 imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
         else:
-            ignore_file = file.replace('.txt', '').replace('.npy', '')
+            ignore_file = file.replace('.txt', '').replace('.npy', '').replace('.hevc')
 
     return np.array(imgs), np.array(labels), ignore_file
 
