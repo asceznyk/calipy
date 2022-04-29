@@ -26,19 +26,22 @@ class CalibData(Dataset):
         label = torch.from_numpy(self.labels[i] * max_scale).float()
         return img.view(size[2], size[0], size[1]), label
 
-def load_img_vector_pairs(_dir):
+def load_img_vector_pairs(_dir, ignore_idx=0):
     os.chdir(_dir)
     labels = []
     imgs = []
-    for file in sorted(glob.glob('*')):
-        if file.endswith('.txt'):
-            print(file)
-            labels.extend(np.loadtxt(f'{_dir}/{file}'))
-        elif file.endswith('.npy'):
-            print(file)
-            imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
+    for i, file in enumerate(sorted(glob.glob('*'))):
+        if i != ignore_idx:
+            if file.endswith('.txt'):
+                print(file)
+                labels.extend(np.loadtxt(f'{_dir}/{file}'))
+            elif file.endswith('.npy'):
+                print(file)
+                imgs.extend(np.load(open(f'{_dir}/{file}' , 'rb')))
+        else:
+            ignore_file = file.replace('.txt', '').replace('.npy', '')
 
-    return np.array(imgs), np.array(labels) ##scaled up labels for better loss
+    return np.array(imgs), np.array(labels), ignore_file
 
 def get_mse(gt, test):
   test = np.nan_to_num(test)

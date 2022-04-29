@@ -29,8 +29,6 @@ class CalibNet(nn.Module):
             nn.Sigmoid()
         )
 
-        self._w = None
-
     def cnn_block(self, in_channels, out_channels, k_size, stride, bias=False):
         return nn.Sequential(
             nn.Conv2d(in_channels, out_channels, k_size, stride, bias=bias),

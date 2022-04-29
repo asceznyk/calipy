@@ -67,12 +67,20 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
 def main(args):
     batch_size = args.batch_size
+    main_dir = args.main_dir
     
-    imgs, labels = load_img_vector_pairs(args.main_dir)
+    imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir)
 
-    x_train, x_valid, y_train, y_valid = train_test_split(imgs, labels, test_size=0.1)
+    print(f'test file: {test_file}')
+    imgs_test = np.load(open(f'{main_dir}/{test_file}.npy', 'rb'))
+    labels_test = np.loadtxt(f'{main_dir}/{test_file}.txt')
 
-    train_data = CalibData(x_train, y_train)
+    x_train, x_valid, y_train, y_valid = train_test_split(imgs_train, labels_train, test_size=0.1)
+
+    print(imgs_test.shape, labels_test.shape)
+    print(labels_test)
+
+    '''train_data = CalibData(x_train, y_train)
     valid_data = CalibData(x_valid, y_valid)
 
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
@@ -82,7 +90,7 @@ def main(args):
 
     fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs) 
 
-    '''random_idx = random.randint(0, 5000)
+    random_idx = random.randint(0, 5000)
     print(random_idx)
     single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)'''
