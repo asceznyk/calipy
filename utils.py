@@ -28,8 +28,10 @@ class CalibData(Dataset):
 
 def load_img_vector_pairs(_dir, ignore_idx=0):
     os.chdir(_dir)
+
     labels = []
     imgs = []
+    ignore_file = '' 
     for i, file in enumerate(sorted(glob.glob('*'))):
         if i != ignore_idx:
             if file.endswith('.txt'):
