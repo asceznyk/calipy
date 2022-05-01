@@ -48,14 +48,18 @@ def get_mse(gt, test):
   test = np.nan_to_num(test)
   return np.mean(np.nanmean((gt - test)**2, axis=0))
 
-def calc_percent_error(model, loader, gt):
+def calc_percent_error(model, loader):
     model.eval()
 
     mp = []
-    for imgs, _ in loader:
+    gt = []
+    for imgs, labels in loader:
         preds, _ = model(imgs.to(device))
+        preds = preds.detach().cpu().numpy() / max_scale
         mp.extend(preds.detach().cpu().numpy())
-    mp = np.array(mp)
+
+    gt = np.array(gt)
+    mp = np.array(mp) 
 
     print(gt)
     print(mp)
