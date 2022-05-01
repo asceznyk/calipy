@@ -57,7 +57,7 @@ def calc_percent_error(model, loader, gt):
         mp.extend(preds.detach().cpu().numpy())
     mp = np.array(mp)
 
-    print(labels)
+    print(gt)
     print(mp)
 
     err_mse = get_mse(gt, mp)
