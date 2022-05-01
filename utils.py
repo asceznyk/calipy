@@ -53,7 +53,7 @@ def calc_percent_error(model, loader, gt):
 
     mp = []
     for imgs, _ in loader:
-        preds, _ = model(imgs)
+        preds, _ = model(imgs.to(device))
         mp.extend(preds.detach().cpu().numpy())
     mp = np.array(mp)
 
