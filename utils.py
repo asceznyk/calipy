@@ -55,8 +55,7 @@ def calc_percent_error(model, loader):
     gt = []
     for imgs, labels in loader:
         preds, _ = model(imgs.to(device))
-        preds = preds.detach().cpu().numpy() / max_scale
-        mp.extend(preds)
+        mp.extend(preds.detach().cpu().numpy() / max_scale)
         gt.extend(labels.detach().cpu().numpy() / max_scale)
 
     gt = np.array(gt)
@@ -70,8 +69,6 @@ def calc_percent_error(model, loader):
     mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-10)
 
     print(err_mse, zero_mse)
-    print(mse_score_percent)
-
     return mse_score_percent
 
 

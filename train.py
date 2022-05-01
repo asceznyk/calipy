@@ -88,7 +88,7 @@ def main(args):
 
     mse_score_percent = calc_percent_error(model, test_loader)
 
-    print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f} %")
+    print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f}%")
 
     '''random_idx = random.randint(0, 5000)
     print(random_idx)
