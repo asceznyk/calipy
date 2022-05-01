@@ -12,6 +12,8 @@ max_scale = 10
 img_size = (3, 200, 266)
 label_size = (2,)
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 class CalibData(Dataset):
     def __init__(self, imgs, labels):
         self.imgs = imgs
