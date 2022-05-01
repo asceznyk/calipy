@@ -71,27 +71,26 @@ def main(args):
     
     imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir, ignore_file='2')
 
-    print(f'test file: {test_file}')
-    imgs_test = np.load(open(f'{main_dir}{test_file}.hevc.npy', 'rb'))
-    labels_test = np.loadtxt(f'{main_dir}{test_file}.txt')
+    x_test = np.load(open(f'{main_dir}{test_file}.hevc.npy', 'rb'))
+    y_test = np.loadtxt(f'{main_dir}{test_file}.txt')
 
     x_train, x_valid, y_train, y_valid = train_test_split(imgs_train, labels_train, test_size=0.1)
 
-    print(x_train.shape, y_train.shape, x_valid.shape, y_valid.shape)
-    print(imgs_test.shape, labels_test.shape)
-    print(labels_test)
-
-    '''train_data = CalibData(x_train, y_train)
+    train_data = CalibData(x_train, y_train)
     valid_data = CalibData(x_valid, y_valid)
+    test_data = CalibData(x_test, y_test)
 
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     valid_loader = DataLoader(valid_data, batch_size=batch_size)
+    test_loader = DataLoader(test_data, batch_size=batch_size)
 
     model = CalibNet(img_size, label_size)
 
-    fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs) 
+    fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs)
 
-    random_idx = random.randint(0, 5000)
+    calc_percent_error(model, test_loader, y_test)
+
+    '''random_idx = random.randint(0, 5000)
     print(random_idx)
     single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
     fit(model, single_batch, epochs=args.epochs)'''

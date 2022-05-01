@@ -46,6 +46,21 @@ def get_mse(gt, test):
   test = np.nan_to_num(test)
   return np.mean(np.nanmean((gt - test)**2, axis=0))
 
+def calc_percent_error(model, loader, gt):
+    model.eval()
+
+    mp = []
+    for imgs, _ in loader:
+        preds, _ = model(imgs)
+        mp.extend(preds.detach().cpu().numpy())
+    mp = np.array(mp)
+
+    err_mse = get_mse(gt, mp)
+    zero_mse = get_mse(gt, np.zeros_like(gt))
+    mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-10)
+
+    print(mse_score_percent)
+    return mse_score_percent
 
 
 
