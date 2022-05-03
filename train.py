@@ -32,8 +32,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
             with torch.set_grad_enabled(is_train):  
                 preds, loss = model(imgs, labels)
 
-                gt = np.nan_to_num(labels.detach().cpu().numpy()) / max_scale
-                mp = preds.detach().cpu().numpy() / max_scale
+                gt = np.nan_to_num(labels.detach().cpu().numpy()) #/ max_scale
+                mp = preds.detach().cpu().numpy() #/ max_scale
 
                 print('')
                 print(gt)
