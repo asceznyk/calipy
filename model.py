@@ -48,6 +48,8 @@ class CalibNet(nn.Module):
 
         loss = None
         if y is not None: 
+            print(p)
+            print(y)
             loss = F.binary_cross_entropy(p, torch.nan_to_num(y))
 
         return p, loss
