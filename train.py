@@ -84,17 +84,17 @@ def main(args):
 
     model = CalibNet(img_size, label_size)
 
-    fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs)
+    '''fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs)
 
     model.load_state_dict(torch.load('calib.best'))
     mse_score_percent = calc_percent_error(model, test_loader)
 
-    print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f}%")
+    print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f}%") '''
 
-    '''random_idx = random.randint(0, 5000)
+    random_idx = 0   
     print(random_idx)
     single_batch = DataLoader(CalibData(imgs[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]), batch_size=batch_size)
-    fit(model, single_batch, epochs=args.epochs)'''
+    fit(model, single_batch, epochs=args.epochs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
