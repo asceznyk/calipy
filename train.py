@@ -35,6 +35,9 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 gt = np.nan_to_num(labels.detach().cpu().numpy()) / max_scale
                 mp = preds.detach().cpu().numpy() / max_scale
 
+                print(gt)
+                print(mp)
+
                 err_mse = get_mse(gt, mp)
                 zero_mse = get_mse(gt, np.zeros_like(gt))
                 mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-10)
