@@ -35,6 +35,7 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
                 gt = np.nan_to_num(labels.detach().cpu().numpy()) / max_scale
                 mp = preds.detach().cpu().numpy() / max_scale
 
+                print('')
                 print(gt)
                 print(mp)
 
