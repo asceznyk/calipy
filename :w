@@ -20,10 +20,7 @@ class CalibNet(nn.Module):
             nn.Flatten(),
         )
 
-        ## 64 * 5 * 9
-
-        self.base_dense = nn.Sequential(
-            self.linear_block(64 * 5 * 9, 200),
+        self.base_dense = nn.Sequential(,
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
