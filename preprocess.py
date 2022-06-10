@@ -16,6 +16,7 @@ def main(videos_dir, ext='*.hevc'):
         while ret:
             ret, img = cap.read() 
             if ret:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, dsize=(img_size[2], img_size[1]), interpolation=cv2.INTER_CUBIC)
                 frames.append(img)
                 

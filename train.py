@@ -98,8 +98,6 @@ def main(args):
     print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f}%") '''
 
     random_idx = 0   
-    print(random_idx)
-
 
     #single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
 
