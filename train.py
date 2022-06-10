@@ -68,6 +68,8 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
 
 
 def main(args):
+    torch.manual_seed()
+
     batch_size = args.batch_size
     main_dir = args.main_dir
     
