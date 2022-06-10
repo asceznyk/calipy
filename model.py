@@ -20,15 +20,12 @@ class CalibNet(nn.Module):
             nn.Flatten(),
         )
 
-        ## 64 * 5 * 9
-
         self.base_dense = nn.Sequential(
             self.linear_block(64 * 5 * 9, 200),
             self.linear_block(200, 100),
             self.linear_block(100, 50),
             self.linear_block(50, 10),
-            nn.Linear(10, ang_dim[0]),
-            nn.Sigmoid()
+            nn.Linear(10, ang_dim)
         )
 
     def cnn_block(self, in_channels, out_channels, k_size, stride, bias=False):
