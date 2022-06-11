@@ -103,13 +103,14 @@ def main(args):
 
     #single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
     
-    fit(model, single_batch, epochs=args.epochs)
+    fit(model, single_batch, epochs=args.epochs, lr=args.learning_rate)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--main_dir', type=str, help='path to data directory')
     parser.add_argument('--epochs', type=int, help='number of epochs to train the model', default=2)
     parser.add_argument('--batch_size', type=int, help='batch size', default=8)
+    parser.add_argument('--learning_rate', type=float, help='learningrate', default=1e-4)
 
     options = parser.parse_args()
 
