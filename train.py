@@ -99,9 +99,9 @@ def main(args):
 
     random_idx = 0   
 
-    single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
+    #single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
 
-    #single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
+    single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
     
     fit(model, single_batch, epochs=args.epochs, lr=args.learning_rate)
 
