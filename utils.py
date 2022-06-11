@@ -16,7 +16,7 @@ label_size = 2
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class CalibData(Dataset):
-   def __init__(self, imgs, labels):
+    def __init__(self, imgs, labels):
         self.imgs = imgs
         self.labels = labels
         self.transform = T.Compose([
