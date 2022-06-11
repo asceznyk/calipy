@@ -16,7 +16,9 @@ from sklearn.model_selection import train_test_split
 from utils import *
 from model import *
 
-def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001):  
+def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001): 
+    print(f'the learning rate chosen: {lr}')
+
     def run_epoch(split):
         is_train = split == 'train' 
         model.train(is_train)
@@ -101,7 +103,7 @@ def main(args):
 
     #single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
 
-    single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
+    single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)).astype(int), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
     
     fit(model, single_batch, epochs=args.epochs, lr=args.learning_rate)
 
