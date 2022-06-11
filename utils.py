@@ -5,6 +5,7 @@ import glob
 import numpy as np
 
 import torch
+import torchvision.transforms as T
 
 from torch.utils.data import Dataset, DataLoader
 
@@ -15,18 +16,21 @@ label_size = 2
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class CalibData(Dataset):
-    def __init__(self, imgs, labels):
+   def __init__(self, imgs, labels):
         self.imgs = imgs
         self.labels = labels
+        self.transform = T.Compose([
+            T.ToPILImage(),
+            T.ToTensor()
+        ])
 
     def __len__(self):
         return self.imgs.shape[0]
 
     def __getitem__(self, i):
-        img = torch.from_numpy(self.imgs[i]/255.0).float()
-        size = img.size()
+        img = self.transform(self.imgs[i])
         label = torch.from_numpy(self.labels[i] * max_scale).float()
-        return img.view(size[2], size[0], size[1]), label
+        return img, label 
 
 def load_img_vector_pairs(_dir, ignore_file='0'):
     os.chdir(_dir)
