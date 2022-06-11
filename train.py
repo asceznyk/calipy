@@ -104,6 +104,7 @@ def main(args):
     if not args.zero_input:
         single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
     else:
+        print(f'all inputs to model are zero, checking training results..')
         single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)).astype(np.uint8), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
     
     fit(model, single_batch, epochs=args.epochs, lr=args.learning_rate)
