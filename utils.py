@@ -10,7 +10,7 @@ import torchvision.transforms as T
 from torch.utils.data import Dataset, DataLoader
 
 max_scale = 1
-img_size = (3, 200, 266)
+img_size = (3, 800, 1064)
 label_size = 2
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
