@@ -11,15 +11,16 @@ import torch.nn as nn
 
 from torch.utils.data import Dataset, DataLoader
 
-from sklearn.model_selection import train_test_split
-
 from utils import *
 from model import *
 
-def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001): 
+def fit(model, optimizer, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.001, log_preds=[0,1]): 
     print(f'the learning rate chosen: {lr}')
+    
+    if type(log_preds) == int:
+        log_preds = [log_preds, log_preds]
 
-    def run_epoch(split):
+    def run_epoch(split, log=0):
         is_train = split == 'train' 
         model.train(is_train)
         loader = train_loader if is_train else valid_loader
@@ -31,91 +32,96 @@ def fit(model, train_loader, valid_loader=None, ckpt_path=None, epochs=10, lr=0.
             batch = [i.to(device) for i in batch]
             imgs, labels = batch
             
-            with torch.set_grad_enabled(is_train): 
-                print('')
-
+            with torch.set_grad_enabled(is_train):
                 preds, loss = model(imgs, labels)
-
-                print(loss)
-
-                gt = np.nan_to_num(labels.detach().cpu().numpy()) #/ max_scale
-                mp = preds.detach().cpu().numpy() #/ max_scale
-
-                err_mse = get_mse(gt, mp)
-                zero_mse = get_mse(gt, np.zeros_like(gt))
-                mse_score_percent = 100 * np.mean(err_mse)/(np.mean(zero_mse) + 1e-10)
-
                 avg_loss += loss.item() / len(loader)
-                avg_mse_percent += mse_score_percent / len(loader)
+                avg_mse_percent += mse_zero_percent(np.nan_to_num(labels.detach().cpu().numpy()),  preds.detach().cpu().numpy()) / len(loader)
+                
+                if log:
+                    print('-'*40)
+                    print(f'predictions for frames ->')
+                    print(preds)
+                    print(f'labels for frames ->')
+                    print(torch.nan_to_num(labels))
+                    print('-'*40)
 
             if is_train:
                 model.zero_grad() 
                 loss.backward() 
                 optimizer.step()
 
-            pbar.set_description(f"epoch: {e+1}, avg_loss: {avg_loss:.6f}, avg_mse_percent: {avg_mse_percent:.3f}%")     
+            pbar.set_description(f"epoch: {e+1}, avg_loss: {avg_loss:.6f}, avg_mse_percent: {avg_mse_percent:.3f}%") 
+
         return avg_loss
 
     model.to(device)
 
     best_loss = float('inf') 
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr) 
+    train_losses, valid_losses = [], []
     for e in range(epochs):
-        train_loss = run_epoch('train')
-        valid_loss = run_epoch('valid') if valid_loader is not None else train_loss
-
+        train_loss = run_epoch('train', log_preds[0])
+        valid_loss = run_epoch('valid', log_preds[1]) if valid_loader is not None else train_loss
+        
+        train_losses.append(train_loss)
+        valid_losses.append(valid_loss)
+        
         if ckpt_path is not None and valid_loss < best_loss:
             best_loss = valid_loss
             torch.save(model.state_dict(), ckpt_path)
+            
+    return train_losses, valid_losses
 
-
-def main(args):
+def main(main_dir, epochs=50, batch_size=4, learning_rate=1e-4, single_batch=0, zero_input=0, pretrained_weights=''):
     torch.manual_seed(0)
 
-    batch_size = args.batch_size
-    main_dir = args.main_dir
-    
-    imgs_train, labels_train, test_file = load_img_vector_pairs(main_dir, ignore_file='2')
-
-    x_test = np.load(open(f'{main_dir}{test_file}.hevc.npy', 'rb'))
-    y_test = np.loadtxt(f'{main_dir}{test_file}.txt')
-
-    x_train, x_valid, y_train, y_valid = train_test_split(imgs_train, labels_train, test_size=0.1)
-
-    train_data = CalibData(x_train, y_train)
-    valid_data = CalibData(x_valid, y_valid)
-    test_data = CalibData(x_test, y_test)
+    img_paths, labels = load_img_path_labels(f'{challenge_path}labeled')
+    train_data, valid_data, test_data = split_data(img_paths, labels)
+    labels = np.nan_to_num(labels)
 
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     valid_loader = DataLoader(valid_data, batch_size=batch_size)
     test_loader = DataLoader(test_data, batch_size=batch_size)
 
-    model = CalibNet(img_size, label_size)
-
-    '''fit(model, train_loader, valid_loader, ckpt_path='calib.best', epochs=args.epochs)
-
-    model.load_state_dict(torch.load('calib.best'))
-    mse_score_percent = calc_percent_error(model, test_loader)
-
-    print(f"YOUR ERROR SCORE ON TEST DATA IS {mse_score_percent:.3f}%") '''
-
-    random_idx = 0   
+    model = CalibConvNet(img_size, label_size)
     
-    if not args.zero_input:
-        single_batch = DataLoader(CalibData(imgs_train[random_idx:random_idx+batch_size], labels_train[random_idx:random_idx+batch_size]), batch_size=batch_size)
+    print(model)
+    print(f'total number of parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}')
+    
+    if pretrained_weights != '':
+        print(f'loading pretrained model from {pretrained_weights}.. ')
+        load_pretrained_model(model, pretrained_weights)
+        
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate) 
+
+    if single_batch:
+        random_idx = 2401
+        labels = fill_zeros_previous(labels)
+        if not zero_input:
+            single_data = CalibData(img_paths[random_idx:random_idx+batch_size], labels[random_idx:random_idx+batch_size]) 
+            single_batch = DataLoader(single_data, batch_size=batch_size)
+        else:
+            print(f'all inputs to model are zeros, checking training results..')
+            single_batch = DataLoader(DummyData(img_size, labels[random_idx: random_idx+batch_size]), batch_size=batch_size)
+
+        train_losses, valid_losses = fit(model, optimizer, single_batch, epochs=epochs, lr=learning_rate, log_preds=1) 
     else:
-        print(f'all inputs to model are zero, checking training results..')
-        single_batch = DataLoader(CalibData(np.zeros((batch_size, 200, 266, 3)).astype(np.uint8), labels_train[random_idx: random_idx+batch_size]), batch_size=batch_size)
-    
-    fit(model, single_batch, epochs=args.epochs, lr=args.learning_rate)
+        train_losses, valid_losses = fit(model, optimizer, train_loader, valid_loader, epochs=epochs, lr=learning_rate, log_preds=0, ckpt_path='calibnet.best')
+        plt.plot(valid_losses)
+        
+    plt.plot(train_losses)
+    plt.show()
 
+    plt.savefig('loss_plot.png')
+   
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--main_dir', type=str, help='path to data directory')
-    parser.add_argument('--epochs', type=int, help='number of epochs to train the model', default=2)
-    parser.add_argument('--batch_size', type=int, help='batch size', default=8)
-    parser.add_argument('--learning_rate', type=float, help='learningrate', default=1e-4)
+    parser.add_argument('--epochs', type=int, help='number of epochs to train the model', default=10)
+    parser.add_argument('--batch_size', type=int, help='batch size', default=4)
+    parser.add_argument('--learning_rate', type=float, help='learning rate', default=1e-4)
+    parser.add_argument('--single_batch', type=int, default=0)
     parser.add_argument('--zero_input', type=int, default=0)
+    parser.add_argument('--pretrained_weights', type=str, default='calibnet.best', help='the saved set of model weights to train/finetune on..')
 
     options = parser.parse_args()
 
