@@ -6,6 +6,8 @@ import torch.nn.functional as F
 
 import torchvision.models as models
 
+from utils import *
+
 class ResBlock(nn.Module):
     def __init__(self, c_in, c_out, stride=1, leaky=1):
         super(ResBlock, self).__init__()
