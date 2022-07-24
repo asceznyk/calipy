@@ -20,7 +20,7 @@ def main(args):
     ext = args.ext
     make_video = args.make_video
 
-    model = CalibNet(img_size, label_size)
+    model = CalibConvNet(img_size, label_size)
     if args.ckpt_path != '':
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
