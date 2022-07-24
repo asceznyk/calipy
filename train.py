@@ -1,13 +1,12 @@
 import os
 import random
+import argparse
 
-import sys
 import numpy as np
 
 from tqdm import tqdm
 
 import torch
-import torch.nn as nn
 
 from torch.utils.data import Dataset, DataLoader
 
@@ -71,8 +70,8 @@ def fit(model, optimizer, train_loader, valid_loader=None, ckpt_path=None, epoch
             
     return train_losses, valid_losses
 
-def main(main_dir, epochs=50, batch_size=4, learning_rate=1e-4, single_batch=0, zero_input=0, pretrained_weights=''):
-    torch.manual_seed(0)
+def main(main_dir, epochs, batch_size, learning_rate, single_batch=0, zero_input=0, pretrained_weights=''):
+    torch.manual_seed(0) 
 
     img_paths, labels = load_img_path_labels(f'{challenge_path}labeled')
     train_data, valid_data, test_data = split_data(img_paths, labels)
@@ -127,7 +126,9 @@ if __name__ == '__main__':
 
     print(options)
 
-    main(options)
+    main(**vars(options))
+
+
 
 
 
