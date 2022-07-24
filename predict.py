@@ -19,8 +19,12 @@ def main(args):
     out_dir = args.out_dir
     ext = args.ext
     make_video = args.make_video
+    
+    if args.model_type == 'conv':
+        model = CalibConvNet(img_size, label_size)
+    else:
+        model = CalibResNet(img_size, label_size)
 
-    model = CalibConvNet(img_size, label_size)
     if args.ckpt_path != '':
         model.load_state_dict(torch.load(args.ckpt_path))
     model.eval()
@@ -81,6 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('--data_dir', type=str, help='path to input videos directory')
     parser.add_argument('--out_dir', type=str, help='path to output predictions directory')
     parser.add_argument('--ckpt_path', default='', type=str, help='path to trained model')
+    parser.add_argument('--model_type', default='conv', type=str, help='type of model')
     parser.add_argument('--ext', default='*.hevc', type=str, help='format of video (ext)')
     parser.add_argument('--make_video', type=int, default=0, help='make video if needed')
     options = parser.parse_args()
