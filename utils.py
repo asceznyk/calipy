@@ -6,6 +6,8 @@ import numpy as np
 import torch
 import torchvision.transforms.functional as VF
 
+from torch.utils.data import Dataset, DataLoader
+
 max_scale = 1
 img_size = (3, 188, 250)
 label_size = 2
